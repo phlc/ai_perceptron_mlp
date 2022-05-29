@@ -5,7 +5,7 @@ import mlp
 import math
 
 
-SIZE = 5
+SIZE = 3
 OPERATOR = 'XOR'
 
 def main(size, operator):
@@ -13,15 +13,29 @@ def main(size, operator):
 
     limiar = lambda x: 1 if x>=0 else 0
     sigmoid = lambda x: 1 - 1 /(1 + math.exp(x)) if x < 0 else 1 / (1 + math.exp(-x))
-    sigmoid_derivative = lambda x: sigmoid(x)*(1-sigmoid(x))
+    sigmoid_derivative = lambda x: x*(1-x)
 
-    model = p.Perceptron(size, limiar, 0.3)
+    model_perceptron = p.Perceptron(size, limiar, 0.3)
 
-    model.fit(X, y)
+    print(f"\n---- PERCEPTRON TRAINING for {operator.upper()} ----")
 
-    print(f" ---- {operator.upper()} ----")
+    model_perceptron.fit(X, y)
+
+    print(f"\n---- PERCEPTRON TEST for {operator.upper()} ----")
     for input in X:
-        print(f"Input: {input}. Output: {model.predict(input)}")
+        print(f"Input: {input}. Output: {model_perceptron.predict(input)}")
+
+
+    model_mlp = mlp.MLP()
+    model_mlp.compile(size, size, sigmoid, sigmoid_derivative)
+
+    print(f"\n---- MLP TRAINING for {operator.upper()} ----")
+
+    model_mlp.fit(X, y)
+
+    print(f"\n---- MLP TEST for {operator.upper()} ----")
+    for input in X:
+        print(f"Input: {input}. Output: {round(model_mlp.predict(input))}")
 
 
 main(SIZE, OPERATOR)

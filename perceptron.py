@@ -15,6 +15,8 @@ class Perceptron:
 
 
     def fit(self, X, y, epochs=100, bias=1):
+        print("Training Model")
+        erros = 0
         self.bias = bias
         for i in range(epochs):
             erros = 0
@@ -26,6 +28,8 @@ class Perceptron:
                 X_bias = [bias] + X[j]
                 for k in range(len(self.pesos)):
                     self.pesos[k] = self.pesos[k] + self.taxa*(desejada - resposta)*X_bias[k]
-            print(f"Epoch {i+1} - Erro: {erros/len(X)}")
             if (erros==0):
+                print("Model Trained - Erros: 0")
                 break
+        if(erros != 0):
+            print(f"Model Trained - Failed to reach 0 erros - Erros: {erros}")
