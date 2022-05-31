@@ -4,4 +4,4 @@ Perceptron and MLP implementation
 
 Usage: python main.py <size> <operator>
 
-Example: python main.pu 4 AND
+Example: python main.py 4 AND
